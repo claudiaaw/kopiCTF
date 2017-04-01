@@ -10,9 +10,9 @@ def encode_image(img, msg):
     hide the msg string characters as ASCII values
     red value of the first pixel is used for length of string
     """
-    length = len(msg)
+    char_length = len(msg)
     # limit length of message to 255
-    if length > 255:
+    if char_length > 255:
         print("text too long! (don't exeed 255 characters)")
         return False
     if img.mode != 'RGB':
@@ -25,27 +25,39 @@ def encode_image(img, msg):
 
     # convert flag to bits
     flagBytes_str = ''.join(format(ord(x), 'b') for x in msg)
+    length = len(flagBytes_str) # change length to length of bits
 
     print (flagBytes_str)
+    print (length)
 
     for row in range(height):
         for col in range(width):
             r, g, b = img.getpixel((col, row))
             byte_r, byte_g, byte_b = format(r, "08b"), format(g, "08b"), format(b, "08b")
             #print (byte_r, byte_g, byte_b)
-            # first value is length of msg
-            if row == 0 and col == 0 and index < length:
-                asc = length
-            elif index <= length:
-                c = msg[index -1]
-                asc = ord(c)
-                byte_asc = format(asc, "08b")
-                print (byte_asc)
+            if index <= length-1:
+                c = flagBytes_str[index]
+                print (c)
+                #asc = ord(c)
+                #byte_asc = format(asc, "08b")
+                #print (byte_asc)
+                new_byte_r = ""
+                new_byte_r = byte_r[0:-1] + c
             else:
-                asc = r
-            encoded.putpixel((col, row), (asc, g , b))
+                new_byte_r = byte_r
+            new_byte_r = int(new_byte_r, 2)
+            encoded.putpixel((col, row), (new_byte_r, g , b))
             index += 1
     return encoded
+
+def binStrToInt(binary_str):
+    length = len(binary_str)
+    num = 0
+    for i in range(length):
+        num = num + int(binary_str[i])
+        num = num * 2
+        return num / 2
+
 def decode_image(img):
     """
     check the red portion of an image (r, g, b) tuple for
