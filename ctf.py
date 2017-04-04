@@ -111,3 +111,93 @@ if img_encoded:
     img2 = Image.open(encoded_image_file)
     hidden_text = decode_image(img2)
     print("Hidden text:\n{}".format(hidden_text))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+##### edited version#######
+from PIL import Image 
+
+def encode_image(img,binInd):
+	length = len(binInd)
+	
+	if img.mode!='RGB':
+		print('image mode not RGB')
+		return False
+	encoded = img.copy()
+	width, height = img.size 
+	index =0
+	for row in range(height):
+		for col in range(width):
+			r,g,b = img.getpixel((col,row))
+			r1 = bin(r)
+ 
+        if row == 0 and col ==0 and index<length:
+				asc = length
+			elif index<= length:
+				c = msg[index-1]
+				asc = ord(c)
+			else:
+				asc =r
+			encoded.putpixel((col,row),(asc,g,b))
+			index+=1
+	return encoded
+
+	
+def decode_image(img):
+	 
+    width, height = img.size
+    msg = ""
+    index = 0
+    for row in range(height):
+        for col in range(width):
+            r, g, b = img.getpixel((col, row))	
+            # first pixel r value is length of message
+            if row == 0 and col == 0:
+                length = r
+            elif index <= length:
+                msg += chr(r)
+
+            index += 1
+    return msg
+	
+secret_msg= "usnsgrp{ml53myp3}"
+individual = list(secret_msg)
+binInd =[]
+for i in individual:
+	temp = ord(i)
+	binTemp = bin(temp)[2:].zfill(8)
+	tempList = list(binTemp)
+	for j in tempList:
+		binInd.append(j)
+
+img = Image.open('randomImage.png')
+encodedImg = encode_image(img, binInd)
+
+if encodedImg:
+	encodedImg.save('newrandomImage.png')
+	
+	
+img2 = Image.open('newrandomImage.png')
+hidden_text =decode_image(img2)
+print('Hidden text:\n{}'.format(hidden_text))
