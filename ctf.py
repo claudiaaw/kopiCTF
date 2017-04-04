@@ -149,14 +149,13 @@ def encode_image(img,binInd):
 	index =0
 	for row in range(height):
 		for col in range(width):
+		    tempBin = binInd[index]
 			r,g,b = img.getpixel((col,row))
-			r1 = bin(r)
- 
-        if row == 0 and col ==0 and index<length:
-				asc = length
-			elif index<= length:
-				c = msg[index-1]
-				asc = ord(c)
+			if index< length:	
+			    if tempBin ==1:
+					asc = r& tempBin
+				else:
+					asc = r | tempBin
 			else:
 				asc =r
 			encoded.putpixel((col,row),(asc,g,b))
@@ -167,7 +166,6 @@ def encode_image(img,binInd):
 def decode_image(img):
 	 
     width, height = img.size
-    msg = ""
     index = 0
     for row in range(height):
         for col in range(width):
