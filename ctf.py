@@ -149,10 +149,10 @@ def encode_image(img,binInd):
 	index =0
 	for row in range(height):
 		for col in range(width):
-		    tempBin = binInd[index]
+			tempBin = binInd[index]
 			r,g,b = img.getpixel((col,row))
 			if index< length:	
-			    if tempBin ==1:
+				if tempBin ==1:
 					asc = r& tempBin
 				else:
 					asc = r | tempBin
@@ -164,20 +164,16 @@ def encode_image(img,binInd):
 
 	
 def decode_image(img):
-	 
-    width, height = img.size
-    index = 0
-    for row in range(height):
-        for col in range(width):
-            r, g, b = img.getpixel((col, row))	
-            # first pixel r value is length of message
-            if row == 0 and col == 0:
-                length = r
-            elif index <= length:
-                msg += chr(r)
-
-            index += 1
-    return msg
+	binList=[]
+   	width, height = img.size
+    	for row in range(height):
+	        for col in range(width):
+        		r, g, b = img.getpixel((col, row))	
+            		mask = 1
+			r1 = r& mask
+			binList.append(r1)
+			
+    	return binList
 	
 secret_msg= "usnsgrp{ml53myp3}"
 individual = list(secret_msg)
