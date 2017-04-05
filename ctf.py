@@ -135,7 +135,6 @@ if img_encoded:
     
     
     
-##### edited version#######
 from PIL import Image 
 
 def encode_image(img,binInd):
@@ -175,9 +174,31 @@ def decode_image(img):
 			r1 = r&mask
 			binList.append(r1)
 			
-	return binList
+	counter=0
+	charList=[]
+	temp =[]
+	for i in binList:
+		if counter==8:
+			counter=0
+			charList.append(temp)
+			temp=[]
+			temp.append(str(i))
+		else:
+			temp.append(str(i))
+		counter+=1
+	msg=""
+	for i in charList:
+		binary = ''.join(i)
+		value = int(binary,2)
+		if value > 31 and value <128:
+			character=chr(value)
+			msg+=character
+		else:
+			pass
+			
+	return msg
 	
-secret_msg= "usnsgrp{ml53myp3}"
+secret_msg= "asdfqwerpofsdtrylookingfurtherqwperokeorkalmosttherelkasdfposdfjpasndflasdfnctfisfunapsdfkasdfvigenere(usnsgrp{ml53myp3})asdkfajsdfkajsdfcongratulationsyoupassedthemessage"
 individual = list(secret_msg)
 binInd =[]
 for i in individual:
@@ -192,7 +213,7 @@ encodedImg = encode_image(img, binInd)
 
 if encodedImg:
 	encodedImg.save('newrandomImage.png')'''
-	
+
 img2 = Image.open('newrandomImage.png')
 print(decode_image(img2))
 #hidden_text =decode_image(img2)
