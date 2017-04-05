@@ -198,7 +198,7 @@ def decode_image(img):
 			
 	return msg
 	
-secret_msg= "asdfqwerpofsdtrylookingfurtherqwperokeorkalmosttherelkasdfposdfjpasndflasdfnctfisfunapsdfkasdfvigenere(usnsgrp{ml53myp3})asdkfajsdfkajsdfcongratulationsyoupassedthemessage"
+secret_msg= "kwbpuuovnyjqnxpipmyogxkdevrripaanovmuimboyvqmcxrripopikwbptmchdttycrbppychdxgrpmqpylktqnjikwbpvigenere(usnsgrp{ml53myp3})eqnodknqnjiknqnjayreberepydmmxwwyynkwqohrrikowqkkc"
 individual = list(secret_msg)
 binInd =[]
 for i in individual:
