@@ -149,13 +149,15 @@ def encode_image(img,binInd):
 	index =0
 	for row in range(height):
 		for col in range(width):
-			tempBin = binInd[index]
 			r,g,b = img.getpixel((col,row))
 			if index< length:	
+				tempBin = int(binInd[index])
 				if tempBin ==1:
-					asc = r& tempBin
+					asc = r& 1
+					
 				else:
-					asc = r | tempBin
+					asc = r & 0
+					
 			else:
 				asc =r
 			encoded.putpixel((col,row),(asc,g,b))
@@ -165,15 +167,15 @@ def encode_image(img,binInd):
 	
 def decode_image(img):
 	binList=[]
-   	width, height = img.size
-    	for row in range(height):
-	        for col in range(width):
-        		r, g, b = img.getpixel((col, row))	
-            		mask = 1
-			r1 = r& mask
+	width, height = img.size
+	for row in range(height):
+		for col in range(width):
+			r, g, b = img.getpixel((col, row))	
+			mask = 1
+			r1 = r&mask
 			binList.append(r1)
 			
-    	return binList
+	return binList
 	
 secret_msg= "usnsgrp{ml53myp3}"
 individual = list(secret_msg)
@@ -185,13 +187,13 @@ for i in individual:
 	for j in tempList:
 		binInd.append(j)
 
-img = Image.open('randomImage.png')
+'''img = Image.open('randomImage.png')
 encodedImg = encode_image(img, binInd)
 
 if encodedImg:
-	encodedImg.save('newrandomImage.png')
-	
+	encodedImg.save('newrandomImage.png')'''
 	
 img2 = Image.open('newrandomImage.png')
-hidden_text =decode_image(img2)
-print('Hidden text:\n{}'.format(hidden_text))
+print(decode_image(img2))
+#hidden_text =decode_image(img2)
+#print('Hidden text:\n{}'.format(hidden_text))
