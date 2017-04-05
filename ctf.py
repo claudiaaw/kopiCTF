@@ -140,9 +140,9 @@ from PIL import Image
 def encode_image(img,binInd):
 	length = len(binInd)
 	
-	if img.mode!='RGB':
-		print('image mode not RGB')
-		return False
+	#if img.mode!='RGB':
+	#	print('image mode not RGB')
+	#	return False
 	encoded = img.copy()
 	width, height = img.size 
 	index =0
